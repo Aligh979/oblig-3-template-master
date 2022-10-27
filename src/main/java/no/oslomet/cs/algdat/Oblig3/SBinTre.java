@@ -218,25 +218,25 @@ public class SBinTre<T> {
     private static <T> Node<T> nestePostorden(Node<T> p) {
 
 
-        if (p==null){
+        if (p==null){ // treet er tomt
             throw new NoSuchElementException("Treet er tomt!");
         }
 
-        else if (p.forelder ==null){
+        else if (p.forelder ==null){ // treet har kun rot noden
             p= null;
         }
 
-        else if (p==p.forelder.høyre){
+        else if (p==p.forelder.høyre){ // noden har kun et barn til høyre
             p=p.forelder;
         }
 
-        else if (p==p.forelder.venstre){
+        else if (p==p.forelder.venstre){ // noden har et barn til venstre eller to barn
 
-            if (p.forelder.høyre==null){
+            if (p.forelder.høyre==null){ //et barn til venstre
                 p=p.forelder;
             }
 
-            else
+            else // to barn
 
                 p= førstePostorden(p.forelder.høyre);
         }
