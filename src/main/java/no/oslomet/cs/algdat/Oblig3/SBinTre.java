@@ -97,7 +97,7 @@ public class SBinTre<T> {
 
         // p er nå null, dvs. ute av treet, q er den siste vi passerte
 
-        p = new Node<>(verdi,q);                   // oppretter en ny node
+        p = new Node<>(verdi,q);                   // oppretter en ny node med forelder
 
         if (q == null) rot = p;                  // p blir rotnode
         else if (cmp < 0) q.venstre = p;         // venstre barn til q
@@ -185,15 +185,34 @@ public class SBinTre<T> {
 
     public void postorden(Oppgave<? super T> oppgave) {
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
+        if (rot==null)
+            return;
+        Node<T> q= førstePostorden(rot);
+        oppgave.utførOppgave(q.verdi);
+        Node<T> r =nestePostorden(q);
+        while (r!=null){
+            oppgave.utførOppgave(r.verdi);
+            r= nestePostorden(r);
+        }
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
 
-        //postordenRecursive(rot, oppgave);
+        postordenRecursive(rot, oppgave);
     }
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+        if (p==null){
+            return;
+        }
+        if (p.venstre!=null){
+            postordenRecursive(p.venstre,oppgave);
+        }
+        if (p.høyre!=null){
+            postordenRecursive(p.høyre,oppgave);
+        }
+        oppgave.utførOppgave(p.verdi);
     }
 
     public ArrayList<T> serialize() {
